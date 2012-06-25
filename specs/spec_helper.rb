@@ -1,5 +1,4 @@
-# require_relative 'spec_helper'
-require './application.rb'
+require './media_converter_service.rb'
 require 'rspec'
 require 'rack/test'
 require 'pry'

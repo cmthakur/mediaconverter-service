@@ -4,6 +4,6 @@ require 'sinatra'
 
 Bundler.setup
 
-require './application'
+require './media_converter_service'
 
-run Sinatra::Application
+run MediaConverterService
