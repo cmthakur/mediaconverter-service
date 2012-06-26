@@ -1,7 +1,5 @@
 require_relative 'spec_helper'
 
-set :environment, :test
-
 describe 'Media converter Service' do
   include Rack::Test::Methods
 
@@ -18,12 +16,14 @@ describe 'Media converter Service' do
   end
 
   context "/start_conversion" do
-    it "should convert start the conversin" do
+    it "should convert file to mp3 format" do
       post "/start", {:source => "./test_files/nepali_song.mp4" , :destination => "./converted", :to => "mp3"}
       last_response.should be_ok
     end
+
+    it "should convert file to flv format" do
+      post "/start", {:source => "./test_files/nepali_song.mp4" , :destination => "./converted", :to => "mpeg"}
+      last_response.should be_ok
+    end
   end
-
-
-
 end

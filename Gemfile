@@ -13,7 +13,9 @@ gem "dm-sqlite-adapter"
 gem "haml"
 gem "bcrypt-ruby"
 gem 'streamio-ffmpeg'
-
+gem 'carrierwave'
+gem  'fog'
+gem 'carrierwave-datamapper'
 gem "json"
 
 group :development do

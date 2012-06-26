@@ -1,10 +1,13 @@
 require './config/database.rb'
-require "./models/media_converter.rb"
 require 'sinatra'
 require 'pry'
+require 'carrierwave'
+require 'carrierwave/datamapper'
+require './models/media_converter.rb'
+require './models/media_uploader.rb'
 
 class MediaConverterService < Sinatra::Base
-
+  #set :environment, :production
 
   get '/' do
     "Work in progress......"

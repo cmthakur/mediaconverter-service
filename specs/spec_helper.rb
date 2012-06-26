@@ -4,6 +4,8 @@ require 'rack/test'
 require 'pry'
 
 
+settings.environment = :test
+
 RSpec.configure do |conf|
   conf.include Rack::Test::Methods
 end
