@@ -14,20 +14,21 @@ class MediaConverter
   property :destination, String, required: true
 
   property :format, String, required: true
-  property :duration, Float,  required: true
+  #property :duration, Float,  required: true
 
   #for vedio
-  property :video_codec, Float, :default => "libx264"
-  property :video_preset, Float, :default => "medium"
-  property :video_min_bitrate, Float, :default => 600
-  property :buffer_size, Float, :default => 2000
-  property :audio_bitrate, Float, :default => 50
-  property :audio_channels, Float, :default => 1
-  property :audio_codec, String, :default => "acc"
-  property :audio_sample_rate, Float, :default => 44100
-  property :resolution, String, :default => "176x144"
-  property :video_bitrate, Float, :default => 220
-  property :video_codec, String, :default => "h264"
+  #property :video_codec, String, :default => "libx264"
+  #property :video_preset
+
+
+  # property :video_min_bitrate, Float, :default => 600
+  # property :buffer_size, Float, :default => 2000
+  # property :audio_bitrate, Float, :default => 50
+  # property :audio_channels, Float, :default => 1
+  # #property :audio_codec, String, :default => "acc"
+  # property :audio_sample_rate, Float, :default => 44100
+  # property :resolution, String, :default => "176x144"
+  # property :video_bitrate, Float, :default => 220
 
   validates_presence_of :source
   validates_presence_of :destination
@@ -42,8 +43,6 @@ class MediaConverter
     @source = conversion_params.delete("source")
     @destination = conversion_params.delete("destination")
     @format = conversion_params.delete("to")
-    binding.pry
-
     begin
       FFMPEG::Movie.new(self.source)
     rescue => e
@@ -65,17 +64,17 @@ class MediaConverter
     end
   end
 
-  private
 
   def upload_media(file_name)
     media = File.open(file_name)
     uploader = MediaUploader.new
     uploader.store!(media)
-    binding.pry
     `rm -rf #{file_name}`
   end
 
   def media_options
-    self.attributes
+    all_attributes = self.attributes
+    [:destination, :format, :source].each { |k| all_attributes.delete k }
+    all_attributes
   end
 end

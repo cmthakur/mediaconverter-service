@@ -22,7 +22,7 @@ describe 'Media converter Service' do
     end
 
     it "should convert file to flv format" do
-      post "/start", {:source => "./test_files/nepali_song.mp4" , :destination => "./converted", :to => "mpeg"}
+      post "/start", {:source => "./test_files/nepali_song.mp4" , :destination => "./converted", :to => "flv"}
       last_response.should be_ok
     end
   end
