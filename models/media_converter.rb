@@ -14,13 +14,11 @@ class MediaConverter
   property :destination, String, required: true
 
   property :format, String, required: true
-  #property :duration, Float,  required: true
+  property :options, Text, :default => {}
 
-  #for vedio
+  #property :duration, Float,  required: true
   #property :video_codec, String, :default => "libx264"
   #property :video_preset
-
-
   # property :video_min_bitrate, Float, :default => 600
   # property :buffer_size, Float, :default => 2000
   # property :audio_bitrate, Float, :default => 50
@@ -33,16 +31,13 @@ class MediaConverter
   validates_presence_of :source
   validates_presence_of :destination
 
-  #for carrierwave you need to mount uploader
-  # mount_uploader :source, MediaUploader
-  # mount_uploader :destination, MediaUploader
-
 
   def initialize(*args)
     conversion_params = args.first
     @source = conversion_params.delete("source")
     @destination = conversion_params.delete("destination")
     @format = conversion_params.delete("to")
+    @options = conversion_params.delete("options") || {}
     begin
       FFMPEG::Movie.new(self.source)
     rescue => e
@@ -73,8 +68,7 @@ class MediaConverter
   end
 
   def media_options
-    all_attributes = self.attributes
-    [:destination, :format, :source].each { |k| all_attributes.delete k }
-    all_attributes
+    options = self.attributes[:options]
+    #Hash[options[1..-2].split(",").map(&:strip).map{|x| x.split("=>").map(&:strip) }]
   end
 end
